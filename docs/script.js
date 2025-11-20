@@ -459,7 +459,7 @@ function createArticleHTML(article) {
     }
     
     // Aquí cambié la disponibilidad para usar 'article.status' si existe, si no usa 'disponible' como fallback
-    html += `<div class="availability-status" data-status="${article.status || 'disponible'}">Disponibilidad: <span>${statusText}</span></div>`;
+    html += `<div class="availability-status" data-status="${article.status || 'disponible'}"><span>${statusText}</span></div>`;
     html += '</ul>';
     html += '</div>';
     
