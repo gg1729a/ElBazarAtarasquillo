@@ -183,6 +183,12 @@ body {
 }
 
 @media (max-width: 600px) {
+        .logo {
+        font-size: 1.1em;
+    }
+    .category-button{
+        font-size: 0.7em;
+    }
     .articles-grid {
         /* Móviles: Una columna */
         grid-template-columns: 1fr;
