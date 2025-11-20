@@ -430,10 +430,9 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Genera el HTML de una tarjeta de artículo.
  * @param {object} article - El objeto de datos del artículo.
- * @param {number} articleNumber - El número secuencial del artículo.
  * @returns {string} - La cadena HTML de la tarjeta.
  */
-function createArticleHTML(article, articleNumber) {
+function createArticleHTML(article) {
     const statusText = article.status === 'disponible' ? 'Disponible' : 'Vendido';
     const articleId = article.idx.trim(); // Asume que 'article.idx' es el identificador único/número
     
@@ -482,7 +481,7 @@ function loadArticles(reset = false, filter = 'all') {
     }
 
     const filteredArticles = ALL_ARTICLES.filter(article => 
-        filter === 'all' || article.category === filter
+        (filter === 'all' || article.category === filter)&&filterByInputText(article)
     );
 
     const startIndex = currentPage * ITEMS_PER_PAGE;
@@ -496,8 +495,7 @@ function loadArticles(reset = false, filter = 'all') {
 
     let htmlContent = '';
     articlesToLoad.forEach(article => {
-        const articleIndexInAll = ALL_ARTICLES.indexOf(article) + 1;
-        htmlContent += createArticleHTML(article, articleIndexInAll);
+        htmlContent += createArticleHTML(article);
     });
 
     articlesGrid.insertAdjacentHTML('beforeend', htmlContent);
@@ -555,35 +553,23 @@ function filterByCategory(category, element) {
 
 /**
  * Filtra los artículos basándose en el texto introducido en la barra de búsqueda.
+ * @param {object} article - El objeto de datos del artículo.
+ * @returns {boolean} - True si el artículo coincide con el texto de búsqueda.
  */
-function filterArticles() {
-    const filterText = document.getElementById('searchInput').value.toUpperCase();
-    
-    // Obtener la categoría activa para aplicarla como filtro secundario
-    const activeCategoryButton = document.querySelector('.category-menu .active');
-    const activeCategory = activeCategoryButton ? activeCategoryButton.getAttribute('onclick').match(/'(.*?)'/)[1] : 'all';
+function filterByInputText(article) {
+    const inputEl = document.getElementById('searchInput');
+    if (!inputEl) return true; // Si no hay input, no filtramos
 
-    const articleCards = document.querySelectorAll('.article-card');
+    const filterText = inputEl.value.trim().toUpperCase();
+    // Si el texto de búsqueda está vacío, dejamos pasar todos los artículos
+    if (filterText === '') return true;
 
-    articleCards.forEach(card => {
-        const descriptionText = card.querySelector('.description').textContent.toUpperCase();
-        const numberText = card.querySelector('.article-number').textContent.toUpperCase();
-        const cardCategory = card.getAttribute('data-category');
-        
-        // 1. Filtrado por texto
-        const textMatch = descriptionText.includes(filterText) || numberText.includes(filterText);
+    const descriptionText = (article.description || '').toUpperCase();
+    const numberText = String(article.idx || '').toUpperCase().trim();
 
-        // 2. Filtrado por categoría (debe coincidir con la categoría activa)
-        const categoryMatch = activeCategory === 'all' || cardCategory === activeCategory;
-
-        // Mostrar solo si cumple con AMBOS filtros
-        if (textMatch && categoryMatch) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    return descriptionText.includes(filterText) || numberText.includes(filterText);
 }
+
 
 function initImageWrapper(wrapper) {
     const img = wrapper.querySelector("img");
