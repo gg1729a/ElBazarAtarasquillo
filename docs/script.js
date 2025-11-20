@@ -566,8 +566,8 @@ function filterByInputText(article) {
 
     const descriptionText = (article.description || '').toUpperCase();
     const numberText = String(article.idx || '').toUpperCase().trim();
-
-    return descriptionText.includes(filterText) || numberText.includes(filterText);
+    const marcaText = (article.marca || '').toUpperCase();
+    return descriptionText.includes(filterText) || numberText.includes(filterText) || marcaText.includes(filterText);
 }
 
 
