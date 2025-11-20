@@ -1,0 +1,253 @@
+/* Importar una fuente moderna de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #4A90E2; /* Azul moderno */
+    --secondary-color: #50E3C2; /* Verde/Cian */
+    --text-color: #333;
+    --bg-light: #f9f9f9;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    /* Ajuste para el header fijo, ahora es más alto con el menú */
+    padding-top: 145px; 
+	
+}
+
+/* --- Encabezado Fijo (Sticky) --- */
+.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-light);
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+/* --- Barra de Búsqueda y Menú de Categorías --- */
+.search-bar input {
+    padding: 10px 15px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+.category-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.category-button {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.category-button:hover {
+    background-color: rgba(74, 144, 226, 0.1);
+}
+
+.category-button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* --- Contenedor Principal y Grid de Artículos --- */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.articles-grid {
+    display: grid;
+    /* Tres columnas de igual tamaño */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+}
+
+/* --- Tarjeta de Artículo (Card) --- */
+.article-card {
+    background-color: #fff;
+    border-radius: 10px;
+     align-self: start;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-light);
+}
+
+/* ** SOLUCIÓN AL NÚMERO CORTADO ** */
+.image-container {
+    flex: 0 0 auto;
+    position: relative;
+    width: 100%;
+    overflow: visible; /* Importante: permite que el contenido sobresalga */
+}
+
+/* ** SOLUCIÓN AL NÚMERO CORTADO ** */
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.description {
+    padding: 15px;
+    font-size: 1.15em;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* --- Estilo del Número de Artículo (Agregado por JS) --- */
+.article-number {
+    position: absolute;
+    top: 0; /* Lo movemos al borde superior */
+    right: 0; /* Lo movemos al borde derecho */
+    transform: translate(px, -10px); /* Movemos el 10px hacia afuera en ambas direcciones */
+    background-color: non; /* Fondo blanco */
+    color: black;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 30%; /* Forma de círculo */
+    font-size: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte para resaltarlo */
+    z-index: 50; 
+    border: 2px solid black; /* Borde para un estilo moderno */
+}
+
+/* --- Responsividad --- */
+@media (max-width: 992px) {
+    .articles-grid {
+        /* Tabletas: Dos columnas */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .search-bar input {
+        width: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+    .articles-grid {
+        /* Móviles: Una columna */
+        grid-template-columns: 1fr;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+    
+    .category-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    body {
+        padding-top: 200px; /* Ajustar el padding del body para el header colapsado */
+    }
+}
+/* --- Estilos de Disponibilidad --- */
+
+.availability-status {
+    padding: 0 15px 15px; /* Padding para alinearlo con la descripción */
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.availability-status span {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-left: 5px;
+    display: inline-block; /* Asegura el correcto padding y background */
+}
+
+/* Estilo para "Disponible" (Highlight Verde) */
+.availability-status[data-status="disponible"] span {
+    background-color: #D4EDDA; /* Fondo verde muy claro (highlight) */
+    color: #155724; /* Texto verde oscuro */
+    border: 1px solid #C3E6CB;
+}
+
+/* Estilo para "Vendido" (Highlight Rojo) */
+.availability-status[data-status="vendido"] span {
+    background-color: #F8D7DA; /* Fondo rojo muy claro (highlight) */
+    color: #721C24; /* Texto rojo oscuro */
+    border: 1px solid #F5C6CB;
+}
+
+.item {
+  text-align: center;
+}
+
+.details {
+  list-style:none;
+  padding-left: 2em;
+  padding-right: 0;
+  margin: 0;
+}
+
+.label {
+  font-weight: bold;
+}
