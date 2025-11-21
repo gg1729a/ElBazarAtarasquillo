@@ -196,6 +196,9 @@ body {
     }
 }
 @media (max-width: 768px) {
+    .details {
+        padding:0;
+        }
     .category-menu{
         overflow: hidden;
         transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
